@@ -52,7 +52,7 @@ public class YathzeeSpel {
 	void speelSpel(Speler speler) {
 		int aantalKeerGooien = 0;
 		do {
-		int index = 0;
+			int index = 0;
 			for (Dobbelsteen ds : dobbelstenenrij) {
 				if (blokkeerarray[index] == 0) {
 					ds.ogen = ds.werpen();
@@ -62,18 +62,15 @@ public class YathzeeSpel {
 					index++;
 				}
 			}
-		worp.WorpUitslag(dobbelstenenrij);
-		resetBlokkeerarray();
-		vasthouden();
-		speler.toevoegenAanWorpGeschiedenis(worp);
-		speler.printWorpGeschiedenis();
-//		System.out.println("Test ");
-		aantalKeerGooien++;
-//		System.out.println("aantalkeergooien: " + aantalKeerGooien + "\n");
+			worp.WorpUitslag(dobbelstenenrij);
+			resetBlokkeerarray();
+			vasthouden();
+			speler.toevoegenAanWorpGeschiedenis(worp);
+			speler.printWorpGeschiedenis();
+			aantalKeerGooien++;
 		} while (aantalKeerGooien < 2);
 		aantalKeerGooien = 0;
 		resetBlokkeerarray();
-//		}
 	}
 
 	int[] vasthouden() {
