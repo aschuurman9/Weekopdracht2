@@ -8,7 +8,6 @@ public class Worp {
 	int[] WorpUitslag(ArrayList<Dobbelsteen> rijdobbelstenen) {
 		System.out.println("WORP");
 		System.out.println("1 2 3 4 5");
-		
 		for (Dobbelsteen ds : rijdobbelstenen) {
 			System.out.print(ds.ogen + " ");
 		}
@@ -17,5 +16,4 @@ public class Worp {
 
 	}
 
-	
 }
