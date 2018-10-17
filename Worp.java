@@ -6,7 +6,6 @@ public class Worp {
 	int[] worpArray = new int[5];
 
 	int[] WorpUitslag(ArrayList<Dobbelsteen> rijdobbelstenen) {
-		System.out.println("Het spel is bezig");
 		System.out.println("WORP");
 		System.out.println("1 2 3 4 5");
 		
