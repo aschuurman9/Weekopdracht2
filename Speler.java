@@ -3,10 +3,11 @@ package weekopdracht2;
 import java.util.ArrayList;
 
 public class Speler {
-	int[] worpGeschiedenis = new int[100];
+	int[] worpGeschiedenis = new int[500];
 	static int counter;
 	static ArrayList<Speler> spelers = new ArrayList<>();
 	String naam;
+	Scoreblad scoreblad = new Scoreblad();
 
 	Speler(String naam) {
 		this.naam = naam;
