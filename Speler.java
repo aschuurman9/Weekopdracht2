@@ -4,10 +4,11 @@ import java.util.ArrayList;
 
 public class Speler {
 	int[] worpGeschiedenis = new int[500];
-	static int counter;
+	private static int counter;
 	static ArrayList<Speler> spelers = new ArrayList<>();
 	String naam;
 	Scoreblad scoreblad = new Scoreblad();
+	int ronde;
 
 	Speler(String naam) {
 		this.naam = naam;

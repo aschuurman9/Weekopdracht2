@@ -10,10 +10,10 @@ public class YathzeeSpel {
 	Worp worp = new Worp();
 
 	YathzeeSpel() {
-		System.out.println("Welkom bij Yathzee!\nMet hoeveel spelers wil je spelen?");
+		System.out.println("Welkom bij Yathzee!\nMet hoeveel spelers wilt u spelen?");
 		int aantalSpelers = scanner.nextInt();
 		for (int i = 0; i < aantalSpelers; i++) {
-			System.out.println("Voer de naam van de speler in: ");
+			System.out.println("Voer de naam van speler " + (i + 1) + " in: ");
 			String naam = scanner.next();
 			Speler speler = new Speler(naam);
 			Speler.spelers.add(speler);
@@ -28,7 +28,7 @@ public class YathzeeSpel {
 	void spelen() {
 		String invoer = scanner.nextLine();
 		boolean doorSpelen = true;
-		
+
 		System.out.println("Het spel begint: ");
 		while (doorSpelen) {
 			switch (invoer) {
@@ -37,9 +37,15 @@ public class YathzeeSpel {
 					System.out.println("\n" + Speler.spelers.get(i).naam + " is aan de beurt.");
 					System.out.println("======================================================");
 					dobbelen(Speler.spelers.get(i));
+					Speler.spelers.get(i).ronde++;
+					if (Speler.spelers.get(i).ronde == 2 & Speler.spelers.get(i) == Speler.spelers.get(Speler.spelers.size() - 1)) {
+							System.out.println("\nHet spel is afgelopen");
+							System.out.println(geefWinnaar(Speler.spelers).naam + " heeft gewonnen!");
+							doorSpelen = false;
+						}
 					invoer = scanner.nextLine();
-				}
-				break;
+					}
+					break;
 			case "q":
 				System.out.println("Stoppen");
 				doorSpelen = false;
@@ -50,6 +56,7 @@ public class YathzeeSpel {
 				break;
 			}
 		}
+
 	}
 
 	void dobbelen(Speler speler) {
@@ -67,18 +74,18 @@ public class YathzeeSpel {
 			}
 			worp.WorpUitslag(dobbelstenenrij);
 			resetBlokkeerarray();
-			if (aantalKeerGooien < 2 ) {
+			if (aantalKeerGooien < 2) {
 				vasthouden();
 			} else {
 				speler.scoreblad.printScoreKaart();
 				showMenuScoreNoteren();
 				int invoer = scanner.nextInt();
 				verwerkKeuzeScoreNoteren(invoer, speler);
-				voegScoreAanScoreKaartToe(speler, invoer-1);
+				voegScoreAanScoreKaartToe(speler, invoer - 1);
 				speler.scoreblad.printScoreKaart();
 			}
 			speler.toevoegenAanWorpGeschiedenis(worp);
-//			speler.printWorpGeschiedenis();
+			// speler.printWorpGeschiedenis();
 			aantalKeerGooien++;
 		} while (aantalKeerGooien < 3);
 		System.out.println("Totaal aantal punten: " + speler.scoreblad.berekenTotaalScore());
@@ -87,7 +94,7 @@ public class YathzeeSpel {
 	}
 
 	int[] vasthouden() {
-		System.out.println("Welke posities wilt u vasthouden? 0 voor geen anders bijv 124");
+		System.out.println("Welke posities wilt u vasthouden? Kies 0 voor geen en anders bijv 124");
 		System.out.println("INVOER: ");
 		String invoer = scanner.nextLine();
 		for (int i = 0; i < invoer.length(); i++) {
@@ -109,9 +116,9 @@ public class YathzeeSpel {
 			blokkeerarray[i] = 0;
 		}
 	}
-	
+
 	void showMenuScoreNoteren() {
-		System.out.println("Hoe wil je de score noteren?");
+		System.out.println("Waar wilt u de score noteren?");
 		System.out.println("Kies: ");
 		System.out.println("1.\talle enen");
 		System.out.println("2.\talle tweeen");
@@ -121,63 +128,82 @@ public class YathzeeSpel {
 		System.out.println("6.\talle zessen");
 		System.out.println("7.\tthree of a kind");
 		System.out.println("8.\tcarre");
-		System.out.println("9.\tkleine straat");
-		System.out.println("10.\tgrote straat");
-		System.out.println("11.\tyathzee");
-		System.out.println("12.\tchance");
+		System.out.println("9.\tfull house");
+		System.out.println("10.\tkleine straat");
+		System.out.println("11.\tgrote straat");
+		System.out.println("12.\tyathzee");
+		System.out.println("13.\tchance");
 	}
-	
+
 	void verwerkKeuzeScoreNoteren(int keuze, Speler speler) {
-		switch (keuze){
-			case 1:
-				speler.scoreblad.berekenScoreEenenEnZessen(worp, 1);
-				break;
-			case 2:
-				speler.scoreblad.berekenScoreEenenEnZessen(worp, 2);
-				break;
-			case 3:
-				speler.scoreblad.berekenScoreEenenEnZessen(worp, 3);
-				break;
-			case 4:
-				speler.scoreblad.berekenScoreEenenEnZessen(worp, 4);
-				break;
-			case 5:
-				speler.scoreblad.berekenScoreEenenEnZessen(worp, 5);
-				break;
-			case 6:
-				speler.scoreblad.berekenScoreEenenEnZessen(worp, 6);
-				break;
-			case 7:
-				speler.scoreblad.berekenScoreThreeOfAKindOfCarre(worp, 3);
-				break;
-			case 8:
-				speler.scoreblad.berekenScoreThreeOfAKindOfCarre(worp, 4);
-				break;
-			case 9:
-				speler.scoreblad.berekenScoreStraat(worp, 2);
-				break;
-			case 10:
-				speler.scoreblad.berekenScoreStraat(worp, 1);
-				break;
-			case 11:
-				speler.scoreblad.berekenScoreYathzee(worp);
-				break;
-			case 12:
-				speler.scoreblad.berekenScoreChance(worp);
-				break;
-		} 
+		switch (keuze) {
+		case 1:
+			speler.scoreblad.berekenScoreEnenEnZessen(worp, 1);
+			break;
+		case 2:
+			speler.scoreblad.berekenScoreEnenEnZessen(worp, 2);
+			break;
+		case 3:
+			speler.scoreblad.berekenScoreEnenEnZessen(worp, 3);
+			break;
+		case 4:
+			speler.scoreblad.berekenScoreEnenEnZessen(worp, 4);
+			break;
+		case 5:
+			speler.scoreblad.berekenScoreEnenEnZessen(worp, 5);
+			break;
+		case 6:
+			speler.scoreblad.berekenScoreEnenEnZessen(worp, 6);
+			break;
+		case 7:
+			speler.scoreblad.berekenScoreThreeOfAKindOfCarre(worp, 3);
+			break;
+		case 8:
+			speler.scoreblad.berekenScoreThreeOfAKindOfCarre(worp, 4);
+			break;
+		case 9:
+			speler.scoreblad.berekenScoreFullHouse(worp);
+			break;
+		case 10:
+			speler.scoreblad.berekenScoreStraat(worp, 2);
+			break;
+		case 11:
+			speler.scoreblad.berekenScoreStraat(worp, 1);
+			break;
+		case 12:
+			speler.scoreblad.berekenScoreYathzee(worp);
+			break;
+		case 13:
+			speler.scoreblad.berekenScoreChance(worp);
+			break;
+		}
 		System.out.println("score: " + speler.scoreblad.score);
 	}
-	
+
 	void voegScoreAanScoreKaartToe(Speler speler, int positie) {
-			if (speler.scoreblad.kaart[positie] == -1) {
-				speler.scoreblad.kaart[positie] = speler.scoreblad.score;
-			} else {
-				System.out.println("Deze optie is niet mogelijk. Kies opnieuw. ");
-				int invoer = scanner.nextInt();
-				verwerkKeuzeScoreNoteren(invoer, speler);
-				voegScoreAanScoreKaartToe(speler, invoer-1);
+		if (speler.scoreblad.kaart[positie] == -1) {
+			speler.scoreblad.kaart[positie] = speler.scoreblad.score;
+		} else {
+			System.out.println("Deze optie is niet mogelijk. Kies opnieuw. ");
+			int invoer = scanner.nextInt();
+			verwerkKeuzeScoreNoteren(invoer, speler);
+			voegScoreAanScoreKaartToe(speler, invoer - 1);
+		}
+	}
+
+	Speler geefWinnaar(ArrayList<Speler> spelers) {
+		Speler winnaar = Speler.spelers.get(0);
+		for (int i = 0; i < Speler.spelers.size(); i++) {
+			System.out.println(Speler.spelers.get(i).naam + " heeft een score van: "
+					+ Speler.spelers.get(i).scoreblad.totaalScore);
+		}
+
+		for (int i = 0; i < Speler.spelers.size(); i++) {
+			if (winnaar.scoreblad.totaalScore < Speler.spelers.get(i).scoreblad.totaalScore) {
+				winnaar = Speler.spelers.get(i);
 			}
+		}
+		return winnaar;
 	}
 
 }

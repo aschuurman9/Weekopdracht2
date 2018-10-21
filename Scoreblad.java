@@ -25,11 +25,11 @@ import java.util.Arrays;
 public class Scoreblad {
 
 	int score;
-	int somScore;
-	int scoreEnen, scoreTweeen, scoreDrieen, scoreVieren, scoreVijven, scoreZessen, scoreThreeOfAKind, scoreCarre,
+	private int somScore;
+	private int scoreEnen, scoreTweeen, scoreDrieen, scoreVieren, scoreVijven, scoreZessen, scoreThreeOfAKind, scoreCarre, scoreFullHouse,
 			scoreKleineStraat, scoreGroteStraat, scoreYathzee, scoreChance;
 	int[] kaart = { scoreEnen, scoreTweeen, scoreDrieen, scoreVieren, scoreVijven, scoreZessen, scoreThreeOfAKind,
-			scoreCarre, scoreKleineStraat, scoreGroteStraat, scoreYathzee, scoreChance };
+			scoreCarre, scoreFullHouse, scoreKleineStraat, scoreGroteStraat, scoreYathzee, scoreChance };
 	int totaalScore = 0;
 
 	Scoreblad() {
@@ -50,7 +50,7 @@ public class Scoreblad {
 		return somScore;
 	}
 
-	int berekenScoreEenenEnZessen(Worp w, int ogenGegooid) {
+	int berekenScoreEnenEnZessen(Worp w, int ogenGegooid) {
 		int counter = 0;
 		score = 0;
 		for (int i = 0; i < w.worpArray.length; i++) {
@@ -115,6 +115,15 @@ public class Scoreblad {
 		return score;
 	}
 
+	int berekenScoreFullHouse(Worp w) {
+		score = 0;
+		Arrays.sort(w.worpArray);
+		if (w.worpArray[0] == w.worpArray[1] && w.worpArray[3] == w.worpArray[4] && (w.worpArray[2] == w.worpArray[1] || w.worpArray[2] == w.worpArray[3])) {
+			score = 25;
+		}
+		return score;
+	}
+	
 	int berekenScoreYathzee(Worp w) {
 		score = 0;
 		int vergelijkGetal = w.worpArray[0];
@@ -193,7 +202,11 @@ public class Scoreblad {
 	void printScoreKaart() {
 		System.out.println("Scorekaart:  ");
 		for (int i = 0; i < kaart.length; i++) {
-			System.out.print(kaart[i] + "\t");
+			if(kaart[i] == -1) {
+				System.out.print("X" + "\t");
+			} else {
+				System.out.print(kaart[i] + "\t");
+			}
 		}
 		System.out.println();
 	}
