@@ -1,5 +1,7 @@
 package weekopdracht2;
 
+// void spelen() switch
+
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -31,30 +33,31 @@ public class YathzeeSpel {
 
 		System.out.println("Het spel begint: ");
 		while (doorSpelen) {
-			switch (invoer) {
-			case "":
+//			switch (invoer) {
+//			case "":
 				for (int i = 0; i < Speler.spelers.size(); i++) {
 					System.out.println("\n" + Speler.spelers.get(i).naam + " is aan de beurt.");
 					System.out.println("======================================================");
 					dobbelen(Speler.spelers.get(i));
 					Speler.spelers.get(i).ronde++;
-					if (Speler.spelers.get(i).ronde == 2 & Speler.spelers.get(i) == Speler.spelers.get(Speler.spelers.size() - 1)) {
+					// compleet spel eindigt bij ronde == 13
+					if (Speler.spelers.get(i).ronde == 13 & Speler.spelers.get(i) == Speler.spelers.get(Speler.spelers.size() - 1)) {
 							System.out.println("\nHet spel is afgelopen");
 							System.out.println(geefWinnaar(Speler.spelers).naam + " heeft gewonnen!");
 							doorSpelen = false;
 						}
 					invoer = scanner.nextLine();
 					}
-					break;
-			case "q":
-				System.out.println("Stoppen");
-				doorSpelen = false;
-				break;
-			default:
-				System.out.println("Dit is geen geldige invoer. Kies opnieuw");
-				invoer = scanner.nextLine();
-				break;
-			}
+//					break;
+//			case "q":
+//				System.out.println("Stoppen");
+//				doorSpelen = false;
+//				break;
+//			default:
+//				System.out.println("Dit is geen geldige invoer. Kies opnieuw");
+//				invoer = scanner.nextLine();
+//				break;
+//			}
 		}
 
 	}
